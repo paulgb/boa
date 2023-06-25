@@ -266,7 +266,7 @@ impl JsObject {
 /// Then, reference this static in the creation phase of an `ObjectData`.
 ///
 /// E.g. `ObjectData::string`
-pub(crate) static ORDINARY_INTERNAL_METHODS: InternalObjectMethods = InternalObjectMethods {
+pub static ORDINARY_INTERNAL_METHODS: InternalObjectMethods = InternalObjectMethods {
     __get_prototype_of__: ordinary_get_prototype_of,
     __set_prototype_of__: ordinary_set_prototype_of,
     __is_extensible__: ordinary_is_extensible,
@@ -289,26 +289,26 @@ pub(crate) static ORDINARY_INTERNAL_METHODS: InternalObjectMethods = InternalObj
 /// resort to `dyn Object`.
 ///
 /// For a guide on how to implement exotic internal methods, see `ORDINARY_INTERNAL_METHODS`.
-#[derive(Clone, Copy)]
-#[allow(clippy::type_complexity)]
-pub(crate) struct InternalObjectMethods {
-    pub(crate) __get_prototype_of__: fn(&JsObject, &mut Context<'_>) -> JsResult<JsPrototype>,
-    pub(crate) __set_prototype_of__: fn(&JsObject, JsPrototype, &mut Context<'_>) -> JsResult<bool>,
-    pub(crate) __is_extensible__: fn(&JsObject, &mut Context<'_>) -> JsResult<bool>,
-    pub(crate) __prevent_extensions__: fn(&JsObject, &mut Context<'_>) -> JsResult<bool>,
-    pub(crate) __get_own_property__:
+#[derive(Clone, Copy, Debug)]
+#[allow(clippy::type_complexity, missing_docs)]
+pub struct InternalObjectMethods {
+    pub __get_prototype_of__: fn(&JsObject, &mut Context<'_>) -> JsResult<JsPrototype>,
+    pub __set_prototype_of__: fn(&JsObject, JsPrototype, &mut Context<'_>) -> JsResult<bool>,
+    pub __is_extensible__: fn(&JsObject, &mut Context<'_>) -> JsResult<bool>,
+    pub __prevent_extensions__: fn(&JsObject, &mut Context<'_>) -> JsResult<bool>,
+    pub __get_own_property__:
         fn(&JsObject, &PropertyKey, &mut Context<'_>) -> JsResult<Option<PropertyDescriptor>>,
-    pub(crate) __define_own_property__:
+    pub __define_own_property__:
         fn(&JsObject, &PropertyKey, PropertyDescriptor, &mut Context<'_>) -> JsResult<bool>,
-    pub(crate) __has_property__: fn(&JsObject, &PropertyKey, &mut Context<'_>) -> JsResult<bool>,
-    pub(crate) __get__: fn(&JsObject, &PropertyKey, JsValue, &mut Context<'_>) -> JsResult<JsValue>,
-    pub(crate) __set__:
+    pub __has_property__: fn(&JsObject, &PropertyKey, &mut Context<'_>) -> JsResult<bool>,
+    pub __get__: fn(&JsObject, &PropertyKey, JsValue, &mut Context<'_>) -> JsResult<JsValue>,
+    pub __set__:
         fn(&JsObject, PropertyKey, JsValue, JsValue, &mut Context<'_>) -> JsResult<bool>,
-    pub(crate) __delete__: fn(&JsObject, &PropertyKey, &mut Context<'_>) -> JsResult<bool>,
-    pub(crate) __own_property_keys__: fn(&JsObject, &mut Context<'_>) -> JsResult<Vec<PropertyKey>>,
-    pub(crate) __call__:
+    pub __delete__: fn(&JsObject, &PropertyKey, &mut Context<'_>) -> JsResult<bool>,
+    pub __own_property_keys__: fn(&JsObject, &mut Context<'_>) -> JsResult<Vec<PropertyKey>>,
+    pub __call__:
         Option<fn(&JsObject, &JsValue, &[JsValue], &mut Context<'_>) -> JsResult<JsValue>>,
-    pub(crate) __construct__:
+    pub __construct__:
         Option<fn(&JsObject, &[JsValue], &JsObject, &mut Context<'_>) -> JsResult<JsObject>>,
 }
 

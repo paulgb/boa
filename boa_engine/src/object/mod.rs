@@ -73,7 +73,7 @@ use std::{
 #[cfg(test)]
 mod tests;
 
-pub(crate) mod internal_methods;
+pub mod internal_methods;
 
 pub mod builtins;
 mod jsobject;
@@ -200,9 +200,10 @@ pub enum PrivateElement {
 }
 
 /// Defines the kind of an object and its internal methods
+#[allow(missing_docs)]
 pub struct ObjectData {
-    pub(crate) kind: ObjectKind,
-    pub(crate) internal_methods: &'static InternalObjectMethods,
+    pub kind: ObjectKind,
+    pub internal_methods: &'static InternalObjectMethods,
 }
 
 impl Debug for ObjectData {
